@@ -23,30 +23,28 @@ declare module 'vue/types/vue' {
  |
  */
 
+function getOptions(options?: Options): Options {
+  return {
+    ignore: {},
+    lang: {
+      locale: 'en',
+      messages: catalogue(options ? (options.ignore || {}) : {})
+    },
+    ...options
+  };
+}
+
+/**
+ * A Lang.js object.
+ */
+export const Lang = (options?: Options) => new Translator(getOptions(options).lang);
+
 /**
  * Adds localization to Vue.
- *
- * Example:
- *
- * ```js
- * Vue.use(LangPlugin, {
- *  lang: {
- *    locale: 'en'
- *  }
- * });
  */
 export default {
   install: (Vue: VueConstructor, options?: Options) => {
-    const opt: Options = {
-      ignore: {},
-      lang: {
-        locale: 'en',
-        messages: catalogue(options ? (options.ignore || {}) : {})
-      },
-      ...options
-    };
-
-    const i18n = new Translator(opt.lang);
+    const i18n = Lang(options);
 
     Vue.mixin({
       methods: {
