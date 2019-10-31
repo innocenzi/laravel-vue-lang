@@ -36,15 +36,17 @@ declare module 'vue/types/vue' {
  * });
  */
 export default {
-  install: (Vue: VueConstructor, options: Options) => {
-    options = {
+  install: (Vue: VueConstructor, options?: Options) => {
+    const opt: Options = {
+      ignore: {},
       lang: {
-        messages: catalogue(options.ignore || {}),
-        ...options.lang,
+        locale: 'en',
+        messages: catalogue(options ? (options.ignore || {}) : {})
       },
+      ...options
     };
 
-    const i18n = new Translator(options.lang);
+    const i18n = new Translator(opt.lang);
 
     Vue.mixin({
       methods: {
