@@ -11,15 +11,16 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "yarn run clean && tsc",
-    "watch": "yarn run clean && tsc -w",
-    "test": "jest test",
-    "test:watch": "jest test --watch"
+    "watch": "yarn run clean && tsc -w"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hawezo/laravel-vue-lang.git"
   },
-  "keywords": ["typescript", "boilerplate"],
+  "keywords": [
+    "typescript",
+    "boilerplate"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hawezo/laravel-vue-lang/issues"
@@ -29,10 +30,12 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-typescript": "^7.6.0",
-    "@types/jest": "^24.0.18",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.1.0",
+    "@types/webpack-env": "^1.14.1",
     "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "lang.js": "^1.1.14",
+    "laravel-localization-loader": "^1.0.5",
+    "vue": "^2.6.10"
   }
 }
