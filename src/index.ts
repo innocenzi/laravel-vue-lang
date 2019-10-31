@@ -1,8 +1,15 @@
-import Translator, { Replacements, LangOptions } from 'lang.js';
-import { IgnoreList } from './IgnoreList';
+import Translator, { Replacements } from 'lang.js';
 import { catalogue } from './utils/messages';
 import { VueConstructor } from 'vue';
 import { Options } from './Options';
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $_: (key: string, replacements?: Replacements, locale?: string) => string;
+    $t: (key: string, replacements?: Replacements, locale?: string) => string;
+    $lang: () => Translator;
+  }
+}
 
 /*
  |--------------------------------------------------------------------------
