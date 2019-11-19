@@ -23,21 +23,31 @@ declare module 'vue/types/vue' {
  |
  */
 
-function getOptions(options?: Options): Options {
-  return {
-    ignore: {},
-    lang: {
-      locale: 'en',
-      messages: catalogue(options ? (options.ignore || {}) : {})
-    },
-    ...options
-  };
-}
-
 /**
  * A Lang.js object.
  */
-export const Lang = (options?: Options) => new Translator(getOptions(options).lang);
+export const Lang = (options?: Options) => {
+  let fallback = options?.fallback || 'en';
+  let detected = document.documentElement.lang || navigator.language || fallback;
+
+  if (options?.shortLanguage || false) {
+    detected = detected.toString().substr(0, 2);
+  }
+
+  options = {
+    ignore: {},
+    locale: detected,
+    fallback: fallback,
+    messages: catalogue(options ? (options.ignore || {}) : {}),
+    ...options
+  }
+
+  return new Translator({
+    fallback: options.fallback,
+    locale: options.locale,
+    messages: options.messages
+  })
+}
 
 /**
  * Adds localization to Vue.

@@ -63,9 +63,8 @@ Register the plugin in your Javascript:
 import Lang from 'laravel-vue-lang';
 
 Vue.use(Lang, {
-  lang: {
-    locale: 'fr',
-  },
+  locale: 'fr',
+  fallback: 'en',
   ignore: {
     fr: ['validation'],
   },
@@ -94,4 +93,30 @@ Example:
     },
   };
 </script>
+```
+
+## Options
+
+There are a few options you can use. 
+
+### `shortLanguage`
+
+This option will transform the locale language code to `ISO-639-1`. For instance, instead of `fr-FR`, it will use `fr`. Note that the package doesn't actually check if the code is legal, it just keeps only the two first characters. 
+
+This options is set to `false` by default.
+
+### `locale` and `fallback`
+
+You can force a locale and define a fallback by using these two options. By default, the locale is determined using the HTML `lang` attribute. If it is empty, [`navigator.language`](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/language) is used instead. 
+
+The default fallback is `en`.
+
+### `ignore` 
+
+You can ignore a localization file in a specific language by adding it to the `ignore` options. 
+
+```js
+ignore: {
+  fr: ['validation'],
+}
 ```

@@ -1,7 +1,10 @@
-import { LangOptions } from "lang.js";
 import { IgnoreList } from "./IgnoreList";
+import { Catalogue } from "./Catalogue";
 
 export interface Options {
-  lang: LangOptions;
+  shortLanguage?: boolean;
+  locale?: string;
+  fallback?: string;
+  messages?: Catalogue;
   ignore?: IgnoreList;
 }
