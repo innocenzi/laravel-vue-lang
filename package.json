@@ -1,6 +1,6 @@
 {
   "name": "laravel-vue-lang",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A localization package for Vue and Laravel.",
   "main": "dist/index.js",
   "author": {
@@ -18,8 +18,11 @@
     "url": "git+https://github.com/hawezo/laravel-vue-lang.git"
   },
   "keywords": [
-    "typescript",
-    "boilerplate"
+    "localization",
+    "vue",
+    "laravel",
+    "webpack",
+    "loader"
   ],
   "license": "MIT",
   "bugs": {
