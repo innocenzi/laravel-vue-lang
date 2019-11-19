@@ -31,7 +31,7 @@
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-typescript": "^7.6.0",
     "@types/webpack-env": "^1.14.1",
-    "typescript": "^3.6.3"
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "lang.js": "^1.1.14",
