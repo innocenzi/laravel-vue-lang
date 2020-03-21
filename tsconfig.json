@@ -9,7 +9,7 @@
     "lib": ["es2017", "es6", "dom"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "types": ["webpack-env"]
+    "types": ["webpack-env", "node"]
   },
   "include": ["src", "test", "src/mix.js"],
   "exclude": ["node_modules"]
