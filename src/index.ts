@@ -1,14 +1,47 @@
 import Translator, { Replacements } from 'lang.js';
-import { catalogue } from './utils/messages';
+import { catalogue } from './catalogue';
 import { VueConstructor } from 'vue';
-import { Options } from './Options';
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $_: (key: string, replacements?: Replacements, locale?: string) => string;
-    $t: (key: string, replacements?: Replacements, locale?: string) => string;
+    __: (key: string, replacements?: Replacements, locale?: string) => string;
     $lang: () => Translator;
   }
+}
+
+export interface IgnoreList {
+  [locale: string]: string[];
+}
+
+export interface Catalogue {
+  [key: string]: { [key: string]: string };
+}
+
+export interface Options {
+  /**
+   * Use `ISO-639-1` short language codes.
+   */
+  shortLanguage?: boolean;
+
+  /**
+   * Force the default locale.
+   */
+  locale?: string;
+
+  /**
+   * Define a fallback locale.
+   */
+  fallback?: string;
+
+  /**
+   * Override the catalogue.
+   */
+  messages?: Catalogue;
+
+  /**
+   * Ignore files.
+   */
+  ignore?: IgnoreList;
 }
 
 /*
@@ -38,16 +71,16 @@ export const Lang = (options?: Options) => {
     ignore: {},
     locale: detected,
     fallback: fallback,
-    messages: catalogue(options ? (options.ignore || {}) : {}),
-    ...options
-  }
+    messages: catalogue(options ? options.ignore || {} : {}),
+    ...options,
+  };
 
   return new Translator({
     fallback: options.fallback,
     locale: options.locale,
-    messages: options.messages
-  })
-}
+    messages: options.messages,
+  });
+};
 
 /**
  * Adds localization to Vue.
@@ -58,8 +91,7 @@ export default {
 
     Vue.mixin({
       methods: {
-        $_: (key: string, replacements?: Replacements, locale?: string) => i18n.get(key, replacements, locale),
-        $t: (key: string, replacements?: Replacements, locale?: string) => i18n.get(key, replacements, locale),
+        __: (key: string, replacements?: Replacements, locale?: string) => i18n.get(key, replacements, locale),
         $lang: () => i18n,
       },
     });
