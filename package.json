@@ -1,6 +1,6 @@
 {
   "name": "laravel-vue-lang",
-  "version": "2.0.1",
+  "version": "3.0.0-alpha",
   "description": "A localization package for Vue and Laravel.",
   "main": "dist/index.js",
   "author": {
