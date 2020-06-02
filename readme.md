@@ -70,11 +70,16 @@ Vue.use(Lang, {
   },
 });
 ```
+Make sure that it goes before:
+```js
+const app = new Vue({
+    el: '#app',
+});
+```
 
 You can now use the following in any Vue file:
 
-- `$t(key: string, replacements?: Replacements, locale?: string)` - To translate `key` with variables `replacements` and locale `locale`.
-- `$_` - Alias for above method
+- `__(key: string, replacements?: Replacements, locale?: string)` - To translate `key` with variables `replacements` and locale `locale`.
 - `$lang()` - Returns the `lang.js` object.
 
 Example:
@@ -82,14 +87,14 @@ Example:
 ```html
 <template>
   <div>
-    <span>{{ $t('messages.hello') }}</span>
+    <span>{{ __('messages.hello') }}</span>
   </div>
 </template>
 
 <script>
   export default {
     created() {
-      console.log(this.$t('messages.hello'));
+      console.log(this.__('messages.hello'));
     },
   };
 </script>
