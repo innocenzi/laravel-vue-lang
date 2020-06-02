@@ -70,6 +70,12 @@ Vue.use(Lang, {
   },
 });
 ```
+Make sure that it goes before:
+```js
+const app = new Vue({
+    el: '#app',
+});
+```
 
 You can now use the following in any Vue file:
 
