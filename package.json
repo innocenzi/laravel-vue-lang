@@ -30,9 +30,6 @@
 	},
 	"homepage": "https://github.com/innocenzi/laravel-vue-lang#readme",
 	"devDependencies": {
-		"@babel/core": "^7.6.2",
-		"@babel/preset-env": "^7.6.2",
-		"@babel/preset-typescript": "^7.6.0",
 		"@types/webpack-env": "^1.14.1",
 		"typescript": "^3.7.2"
 	},
