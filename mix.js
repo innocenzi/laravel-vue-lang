@@ -8,8 +8,8 @@ class LangExtension {
 
   webpackRules() {
     return {
-      test: /resources[\\\/]lang.+\.(php|json)$/,
-      loader: 'laravel-localization-loader',
+      test: /resources[\\\/]lang.+\.(php)$/,
+      loader: 'php-array-loader',
     }
   }
 

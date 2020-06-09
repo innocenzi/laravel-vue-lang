@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "lang.js": "^1.1.14",
-    "laravel-localization-loader": "^1.0.5",
+    "php-array-loader": "^1.0.1",
     "vue": "^2.6.10"
   },
   "peerDependencies": {
