@@ -47,8 +47,8 @@ mix.webpackConfig({
   module: {
     rules: [
       {
-        test: /resources[\\\/]lang.+\.(php|json)$/,
-        loader: 'laravel-localization-loader',
+        test: /resources[\\\/]lang.+\.(php)$/,
+        loader: 'php-array-loader',
       },
     ],
   },
@@ -99,6 +99,19 @@ Example:
   };
 </script>
 ```
+
+### `Support for String as Keys`
+This package supports the usage of Strings as Keys for application with heavy translation requirements. As proposed by [Laravel](https://laravel.com/docs/7.x/localization#using-translation-strings-as-keys) the way to archive this is by adding a `_global` key.
+
+Example:
+```html
+<template>
+  <div>
+    <span>{{ __('_global.This is a long string as key') }}</span>
+  </div>
+</template>
+```
+
 
 ## Options
 
