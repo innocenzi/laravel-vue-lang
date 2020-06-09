@@ -1,47 +1,47 @@
 {
-  "name": "laravel-vue-lang",
-  "version": "2.0.1",
-  "description": "A localization package for Vue and Laravel.",
-  "main": "dist/index.js",
-  "author": {
-    "email": "enzo@innocenzi.dev",
-    "name": "Enzo Innocenzi",
-    "url": "https://innocenzi.dev"
-  },
-  "scripts": {
-    "clean": "rm -rf dist",
-    "build": "yarn run clean && tsc",
-    "watch": "yarn run clean && tsc -w"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hawezo/laravel-vue-lang.git"
-  },
-  "keywords": [
-    "localization",
-    "vue",
-    "laravel",
-    "webpack",
-    "loader"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hawezo/laravel-vue-lang/issues"
-  },
-  "homepage": "https://github.com/hawezo/laravel-vue-lang#readme",
-  "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/preset-typescript": "^7.6.0",
-    "@types/webpack-env": "^1.14.1",
-    "typescript": "^3.7.2"
-  },
-  "dependencies": {
-    "lang.js": "^1.1.14",
-    "laravel-localization-loader": "^1.0.5",
-    "vue": "^2.6.10"
-  },
-  "peerDependencies": {
-    "laravel-mix": "^4.0.0 || ^5.0.0"
-  }
+	"name": "laravel-vue-lang",
+	"version": "2.0.1",
+	"description": "A localization package for Vue and Laravel.",
+	"main": "dist/index.js",
+	"author": {
+		"email": "enzo@innocenzi.dev",
+		"name": "Enzo Innocenzi",
+		"url": "https://innocenzi.dev"
+	},
+	"scripts": {
+		"clean": "rm -rf dist",
+		"build": "yarn run clean && tsc",
+		"watch": "yarn run clean && tsc -w"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/innocenzi/laravel-vue-lang.git"
+	},
+	"keywords": [
+		"localization",
+		"vue",
+		"laravel",
+		"webpack",
+		"loader"
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/innocenzi/laravel-vue-lang/issues"
+	},
+	"homepage": "https://github.com/innocenzi/laravel-vue-lang#readme",
+	"devDependencies": {
+		"@babel/core": "^7.6.2",
+		"@babel/preset-env": "^7.6.2",
+		"@babel/preset-typescript": "^7.6.0",
+		"@types/webpack-env": "^1.14.1",
+		"typescript": "^3.7.2"
+	},
+	"dependencies": {
+		"lang.js": "^1.1.14",
+		"laravel-localization-loader": "^1.0.5",
+		"vue": "^2.6.10"
+	},
+	"peerDependencies": {
+		"laravel-mix": "^4.0.0 || ^5.0.0"
+	}
 }
