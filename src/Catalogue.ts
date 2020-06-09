@@ -22,6 +22,16 @@ export function catalogue(ignore: IgnoreList): Catalogue {
     if (lang && lang.length === 3 && !shouldIgnore({ ignore, locale: lang[1], domain: lang[2] })) {
       catalogue[`${lang[1]}.${lang[2]}`] = include(file);
     }
+
+    // Now check for root level translations
+    // Laravel supports for heavy translations
+    // Refeer to 'Using Translation Strings As Keys'
+    if (lang === null) {
+    	const lang = new RegExp('./(.*).(?:json)').exec(file);
+    	if (lang) {
+    		catalogue[`${lang[1]}._global`] = include(file);
+    	}
+    }
   });
 
   return catalogue;
