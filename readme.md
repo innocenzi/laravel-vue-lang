@@ -1,15 +1,16 @@
 # Localization for Vue and Laravel
 
+This package allows to easily setup localization with a Laravel application using Vue. It is based on [`Lang.js`](https://github.com/rmariuzzo/Lang.js/).
+
 ## Installation
 
 ```console
 $ yarn add laravel-vue-lang
 ```
 
-## With the Laravel Mix extension
+### With the Laravel Mix extension
 
-This package ships with a Laravel Mix extension. You can include it and call `.lang()` on Mix. 
-If for some reason your localization files are not in `resources/lang`, you can pass a string in `.lang()`: `mix.lang('resources/translations')`.
+This package ships with a Laravel Mix extension. You can include it and call `.lang()` on Mix. If for some reason your localization files are not in `resources/lang`, you can pass its path as a parameter.
 
 Your `webpack.mix.js` should look like that:
 
@@ -17,42 +18,35 @@ Your `webpack.mix.js` should look like that:
 const mix = require('laravel-mix');
 require('laravel-vue-lang/mix');
 
-mix.
-    // ...
-    lang();
+mix
+	// ...
+	.lang();
 ```
 
-## Without the extension
+### Without the extension
 
-Add the following loader rule to your webpack configuration:
-
-```js
-{
-    test: /resources[\\\/]lang.+\.(php|json)$/,
-    loader: 'laravel-localization-loader',
-}
-```
-
-Also add a `@lang` alias to `./resources/lang`, or whatever path your lang files are in.
-
-A Laravel Mix config without the extension would look like this:
+If you prefer manual configuration, you will need to add a rule to load your translations, and a `@lang` alias that point to your lang directory. Your Mix configuration should look like this:
 
 ```js
-mix.webpackConfig({
-  resolve: {
-    alias: {
-      '@lang': path.resolve('./resources/lang'),
-    },
-  },
-  module: {
-    rules: [
-      {
-        test: /resources[\\\/]lang.+\.(php|json)$/,
-        loader: 'laravel-localization-loader',
-      },
-    ],
-  },
-});
+const mix = require('laravel-mix');
+
+mix
+	// ...
+	.webpackConfig({
+		resolve: {
+			alias: {
+				'@lang': path.resolve('./resources/lang'),
+			},
+		},
+		module: {
+			rules: [
+				{
+					test: /resources[\\\/]lang.+\.(php)$/,
+					loader: 'php-array-loader',
+				},
+			],
+		},
+	});
 ```
 
 ## Usage
@@ -60,66 +54,57 @@ mix.webpackConfig({
 Register the plugin in your Javascript:
 
 ```js
-import Lang from 'laravel-vue-lang';
+import { Lang } from 'laravel-vue-lang';
 
+// Register the plugin
 Vue.use(Lang, {
-  locale: 'fr',
-  fallback: 'en',
-  ignore: {
-    fr: ['validation'],
-  },
+	locale: 'fr',
+	fallback: 'en',
+	ignore: {
+		fr: ['validation'],
+	},
 });
-```
-Make sure that it goes before:
-```js
+
+// Register Vue
 const app = new Vue({
-    el: '#app',
+	el: '#app',
 });
 ```
 
 You can now use the following in any Vue file:
 
-- `$t(key: string, replacements?: Replacements, locale?: string)` - To translate `key` with variables `replacements` and locale `locale`.
-- `$_` - Alias for above method
-- `$lang()` - Returns the `lang.js` object.
+- `__(key: string, replacements?: Replacements, locale?: string)` — Translates `key`, using optional variables `replacements` and locale `locale`.
+- `$lang()` — Returns the `lang.js` object.
 
 Example:
 
 ```html
 <template>
-  <div>
-    <span>{{ $t('messages.hello') }}</span>
-  </div>
+	<div>
+		<span>{{ __('messages.hello') }}</span>
+	</div>
 </template>
 
 <script>
-  export default {
-    created() {
-      console.log(this.$t('messages.hello'));
-    },
-  };
+	export default {
+		created() {
+			console.log(this.__('messages.hello'));
+		},
+	};
 </script>
 ```
 
 ## Options
 
-There are a few options you can use. 
-
-### `shortLanguage`
-
-This option will transform the locale language code to `ISO-639-1`. For instance, instead of `fr-FR`, it will use `fr`. Note that the package doesn't actually check if the code is legal, it just keeps only the two first characters. 
-
-This options is set to `false` by default.
-
 ### `locale` and `fallback`
 
-You can force a locale and define a fallback by using these two options. By default, the locale is determined using the HTML `lang` attribute. If it is empty, [`navigator.language`](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/language) is used instead. 
+You can force a locale and define a fallback by using these two options. By default, the locale is determined using the HTML `lang` attribute. If it is empty, [`navigator.language`](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/language) is used instead.
 
-The default fallback is `en`.
+If you use a translation key that can't be found, the fallback language will be used instead. If it still can't be found, the translation key will be returned.
 
-### `ignore` 
+### `ignore`
 
-You can ignore a localization file in a specific language by adding it to the `ignore` options. 
+You can ignore a localization file in a specific language by adding it to the `ignore` options.
 
 ```js
 ignore: {
