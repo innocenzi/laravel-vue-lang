@@ -1,6 +1,6 @@
 {
 	"name": "laravel-vue-lang",
-	"version": "2.0.1",
+	"version": "3.0.0",
 	"description": "A localization package for Vue and Laravel.",
 	"main": "dist/index.js",
 	"author": {
@@ -12,7 +12,7 @@
 		"clean": "rm -rf dist",
 		"build": "yarn run clean && tsc",
 		"watch": "yarn run clean && tsc -w",
-		"release": "yarn build && standard-version"
+		"release": "yarn build && standard-version --skip.changelog"
 	},
 	"repository": {
 		"type": "git",
