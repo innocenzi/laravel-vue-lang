@@ -1,67 +1,102 @@
-import Translator, { Replacements } from 'lang.js';
-import { catalogue } from './utils/messages';
+import Translator, { Replacements, LangOptions } from 'lang.js';
 import { VueConstructor } from 'vue';
-import { Options } from './Options';
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $_: (key: string, replacements?: Replacements, locale?: string) => string;
-    $t: (key: string, replacements?: Replacements, locale?: string) => string;
-    $lang: () => Translator;
-  }
+/*
+|--------------------------------------------------------------------------
+| Types & Interfaces
+|--------------------------------------------------------------------------
+*/
+
+type TranslateFunction = (key: string, replacements?: Replacements, locale?: string) => string;
+type IgnoreList = Map<string, string[]>;
+
+interface Translations {
+	// eg. fr.auth
+	[localeDotDomain: string]: {
+		[key: string]: string;
+	};
+}
+
+interface Options extends LangOptions {
+	ignore: IgnoreList;
+	globalTranslationsKey: string;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Helpers
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * Determines if the given locale and domain combination is ignored.
+ */
+function shouldIgnore(ignore: IgnoreList, locale: string, domain: string) {
+	for (let [ignoreLocale, ignoreDomains] of Object.entries(ignore)) {
+		if (locale === ignoreLocale && ignoreDomains.includes(domain)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Imports translations from the configured alias.
+ */
+function importTranslations({ ignore }: Partial<Options>): Translations {
+	const catalogue: Translations = {};
+	const files = require.context('@lang', true, /\.(php|json)$/);
+
+	files.keys().forEach((file: string) => {
+		const [match, locale, domain] = new RegExp('./(.*)/(.*).(?:php|json)').exec(file) ?? [];
+
+		if (!ignore || !shouldIgnore(ignore, locale, domain)) {
+			catalogue[`${locale}.${domain}`] = files(file);
+		}
+	});
+
+	return catalogue;
 }
 
 /*
  |--------------------------------------------------------------------------
- | Localization
+ | Vue plugin
  |--------------------------------------------------------------------------
- |
- | This wrapper adds localization to your Vue application. It will
- | automatically finds all of your app's translations. If you want,
- | you can ignore some translation files by adding them in the ignore
- | map below.
- |
  */
 
 /**
- * A Lang.js object.
+ * Augments vue.
  */
-export const Lang = (options?: Options) => {
-  let fallback = options?.fallback || 'en';
-  let detected = document.documentElement.lang || navigator.language || fallback;
-
-  if (options?.shortLanguage || false) {
-    detected = detected.toString().substr(0, 2);
-  }
-
-  options = {
-    ignore: {},
-    locale: detected,
-    fallback: fallback,
-    messages: catalogue(options ? (options.ignore || {}) : {}),
-    ...options
-  }
-
-  return new Translator({
-    fallback: options.fallback,
-    locale: options.locale,
-    messages: options.messages
-  })
+declare module 'vue/types/vue' {
+	interface Vue {
+		$lang: () => Translator;
+		__: TranslateFunction;
+	}
 }
 
 /**
  * Adds localization to Vue.
  */
-export default {
-  install: (Vue: VueConstructor, options?: Options) => {
-    const i18n = Lang(options);
+const Lang = {
+	install: (Vue: VueConstructor, options: Partial<Options> = {}) => {
+		// Creates the Lang.js object
+		const i18n = new Translator({
+			fallback: document.documentElement.lang || navigator.language,
+			messages: options?.messages ?? importTranslations(options),
+			...options,
+		});
 
-    Vue.mixin({
-      methods: {
-        $_: (key: string, replacements?: Replacements, locale?: string) => i18n.get(key, replacements, locale),
-        $t: (key: string, replacements?: Replacements, locale?: string) => i18n.get(key, replacements, locale),
-        $lang: () => i18n,
-      },
-    });
-  },
+		// Defines the translation function
+		const __: TranslateFunction = (...args) => i18n.get(...args);
+
+		Vue.mixin({
+			methods: {
+				$lang: () => i18n,
+				__,
+			},
+		});
+	},
 };
+
+export { Lang as default, Lang };
