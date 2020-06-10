@@ -7,25 +7,12 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
-json-loader@^0.5.4:
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
-  integrity sha512-QLPs8Dj7lnf3e3QYS1zkCo+4ZwqOiF9d/nZnYozTISxXWCfNs9yuky5rJw4/W34s7POaNlbZmQGaB5NiXCbP4w==
-
 lang.js@^1.1.14:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/lang.js/-/lang.js-1.1.14.tgz#96329c064c18f8d5e1299d79d827a368af08c710"
   integrity sha512-HsNKw3b7tYHwDQux3lQtbLGAntwJ5fl8Pl1BPXTKu+gdpaZsK9d787yFmLi6/LSXeNSgPO1CjZDKkrrPsERbSw==
 
-laravel-localization-loader@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/laravel-localization-loader/-/laravel-localization-loader-1.0.5.tgz#aef66e121ec0f92831ab6de3d7fb382f9c9b0593"
-  integrity sha512-2RtkFoVIWqhtCTQ+bwmiYgPhD9Z0pv3ShZMU20lE9W7KwSXE39dzLMsz+v35Uq2o6+3BwJ6Sy0KNzL4xJJMrHA==
-  dependencies:
-    json-loader "^0.5.4"
-    php-array-loader "^1.0.0"
-
-php-array-loader@^1.0.0:
+php-array-loader@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/php-array-loader/-/php-array-loader-1.0.1.tgz#78173cc8aadbda57b8491f5dffe144afb9eadd71"
   integrity sha1-eBc8yKrb2le4SR9d/+FEr7nq3XE=
