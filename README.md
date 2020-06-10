@@ -1,4 +1,9 @@
-# Localization for Vue and Laravel
+<p align="center">
+  <h1 align="center">Localization for Vue and Laravel</h1>
+  <p align="center">
+    <img alt="npm" src="https://img.shields.io/npm/v/laravel-vue-lang?color=32c854">
+  </p>
+<p>
 
 This package allows to easily setup localization with a Laravel application using Vue. It is based on [`Lang.js`](https://github.com/rmariuzzo/Lang.js/).
 
