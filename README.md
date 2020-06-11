@@ -78,8 +78,10 @@ const app = new Vue({
 
 You can now use the following in any Vue file:
 
-- `__(key: string, replacements?: Replacements, locale?: string)` — Translates `key`, using optional variables `replacements` and locale `locale`.
-- `$lang()` — Returns the `lang.js` object.
+| Function name | Description                                                                                   | Arguments                                                   |
+| ------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `__()`        | Translates the given `key`, using optional `replacements` variables and the optional `locale` | `key: string, replacements?: Replacements, locale?: string` |
+| `$lang()`     | Returns the `lang.js` object.                                                                 | None                                                        |
 
 Example:
 
@@ -99,6 +101,31 @@ Example:
 </script>
 ```
 
+### Root-level translations
+
+It is possible to have a root-level set of translations, such as a `/resources/lang/fr.php` instead of `/resources/lang/fr/domain.php`. You can use these translations by not specifying any domain while using the translate function.
+
+```php
+// resources/lang/fr.php
+<?php
+
+return [
+  'Hey you' => 'Salut toi'
+];
+```
+
+```html
+<!-- Component.vue -->
+<template>
+	<div>
+		<span>{{ __('Hey you') }}</span>
+		<!-- Salut toi -->
+	</div>
+</template>
+```
+
+This is possible by working around `lang.js` and using a defined "global" domain. The actual translation key would be `__global__.Hey you`, but `__global__` will be stripped so the fallback can be used if the translation is not found.
+
 ## Options
 
 ### `locale` and `fallback`
@@ -116,3 +143,7 @@ ignore: {
   fr: ['validation'],
 }
 ```
+
+### `globalTranslationsKey`
+
+This is the key used to work around `lang.js` in order to implement root-level translations. The default is `__global__`, and you shouldn't need to change it.
