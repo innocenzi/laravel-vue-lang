@@ -93,7 +93,7 @@ const Lang = {
 	install: (Vue: VueConstructor, options: Partial<Options> = {}) => {
 		// Defines default options
 		options = {
-			globalTranslationsKey: '_global',
+			globalTranslationsKey: '__global__',
 			...options,
 		};
 
@@ -104,21 +104,19 @@ const Lang = {
 			...options,
 		});
 
-		// Defines the translation function
+		// Defines a global translation function
 		const __: TranslateFunction = (key, ...args) => {
-			const isKeyValue = /^[A-Za-z0-9]*(?:\.[A-Za-z0-9]+)/.exec(key);
-
-			if (isKeyValue) {
+			// Non-global translations
+			if (key.match(/^[\w-]+(?:\.[\w-]+)+$/)) {
 				return i18n.get(key, ...args);
 			}
 
-			let result = i18n.get(`${options.globalTranslationsKey}.${key}`, ...args);
+			// Global translations
+			const result = i18n.get(`${options.globalTranslationsKey}.${key}`, ...args);
 
-			if (result.startsWith(<string>options.globalTranslationsKey)) {
-				result = result.substr((<string>options.globalTranslationsKey).length + 1);
-			}
-
-			return result;
+			return result.startsWith(options.globalTranslationsKey!)
+				? result.substr(options.globalTranslationsKey!.length + 1)
+				: result;
 		};
 
 		Vue.mixin({
