@@ -82,7 +82,6 @@ function importTranslations({ ignore, globalTranslationsKey }: Partial<Options>)
 declare module 'vue/types/vue' {
 	interface Vue {
 		$lang: () => Translator;
-		___: TranslateFunction;
 		__: TranslateFunction;
 	}
 }
@@ -106,10 +105,13 @@ const Lang = {
 		});
 
 		// Defines the translation function
-		const __: TranslateFunction = (...args) => i18n.get(...args);
+		const __: TranslateFunction = (key, ...args) => {
+			const isKeyValue = /^[A-Za-z0-9]*(?:\.[A-Za-z0-9]+)/.exec(key);
 
-		// Defines a global translation function
-		const ___: TranslateFunction = (key, ...args) => {
+			if (isKeyValue) {
+				return i18n.get(key, ...args);
+			}
+
 			let result = i18n.get(`${options.globalTranslationsKey}.${key}`, ...args);
 
 			if (result.startsWith(<string>options.globalTranslationsKey)) {
@@ -122,7 +124,6 @@ const Lang = {
 		Vue.mixin({
 			methods: {
 				$lang: () => i18n,
-				___,
 				__,
 			},
 		});
