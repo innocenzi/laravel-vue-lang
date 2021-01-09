@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 class LangExtension {
 	register(lang) {
