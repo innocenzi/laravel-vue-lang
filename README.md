@@ -6,6 +6,8 @@
 <p>
 
 This package allows to easily setup localization with a Laravel application using Vue. It is based on [`Lang.js`](https://github.com/rmariuzzo/Lang.js/).
+	
+> **Note**: feature requests are no longer accepted. I'll still merge easily-reviewable PRs. I don't use this package anymore and I advice using vuei18n instead.
 
 ## Installation
 
